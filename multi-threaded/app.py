@@ -1,13 +1,7 @@
-# Punzalan, Kurt Brian Daine B. Punzalan
-# 2020-00772
-# CMSC 180 - T-6L
-# Exercise 01
-
 import os
 import random
+import threading
 import time
-
-os.system("clear")
 
 
 #! FUNCTIONS
@@ -52,8 +46,6 @@ def terrain_inter_row(M, n, row):
             except:
                 pass
 
-    return M
-
 
 def terrain_inter_col(M, n, col):
     for index in range(n):
@@ -74,11 +66,32 @@ def terrain_inter_col(M, n, col):
     return M
 
 
-#! MAIN
+def elevate(M, n, index, index2):
+    print(f"Divided matrix {index} to {index2-1}")
+    print(
+        "==========================================================================================================================="
+    )
 
+    for row in range(index, index2):
+        terrain_inter_row(M, n, row)
+
+    for i in range(index, index2):
+        for j in range(n):
+            print(M[i][j], end="\t")
+        print()
+    print(
+        "==========================================================================================================================="
+    )
+    print()
+
+
+#! MAIN
 if __name__ == "__main__":
+    os.system("clear")
+
     # user input
     n = int(input("Input: ")) + 1
+    t = int(input("Number of submatrices: "))
 
     # matrix
     M = [[0 for column in range(n)] for row in range(n)]
@@ -92,42 +105,64 @@ if __name__ == "__main__":
     # calculate
     time_before = time.time()
 
-    # fill the rows whose columns are divisible by 10
-    row = 0
-    while row < n:
-        M = terrain_inter_row(M, n, row)
-        row += 10
-
-    print("Interpolated 1st and Last Row")
-    printMatrix(M, n)
-    print()
-
     # fill the columns whose rows are divisible by 10
     col = 0
     while col < n:
         M = terrain_inter_col(M, n, col)
         col += 10
 
-    print("Interpolated 1st and Last Column")
+    print("1st and Last Columns")
     printMatrix(M, n)
     print()
 
-    # fill remaining rows (inner box)
-    for row in range(1, n - 1):
-        if row % 10 == 0:
-            continue
-        M = terrain_inter_row(M, n, row)
+    # printMatrix(M, n)
+    # print()
 
-    print("Interpolated All/Remaining")
-    printMatrix(M, n)
-    print()
-    # for i in range(n):
-    #     for j in range(n):
-    #         print(f"({i}, {j})", end="\t")
-    #     print()
+    #! get submatrices (per row)
+
+    num_per_group = n // t
+    remainder = n % t
+    elements = [num_per_group] * t
+
+    # Distribute the remainder evenly
+    for i in range(remainder):
+        elements[i] += 1
+
+    # print(elements)
+
+    # put into a list the starting indexes of the submatrices
+    start_index = 0
+    start_list = [0]  # starting will always be 0th index
+    for item in range(len(elements) - 1):
+        start_list.append(start_index + elements[item])
+        start_index += elements[item]
+
+    threads = []
+
+    for i in range(t):
+        index = start_list[i]
+        if i == t - 1:  # last row
+            index2 = n
+        else:
+            index2 = start_list[i + 1]
+
+        my_thread = threading.Thread(
+            target=elevate,
+            args=(
+                M,
+                n,
+                index,
+                index2,
+            ),
+        )
+        threads.append(my_thread)
+
+    for p in threads:
+        p.start()
+
+    for p in threads:
+        p.join()
 
     time_elapsed = time.time() - time_before
 
-    print("=========================================")
     print("time elapsed:", time_elapsed)
-    print("=========================================")
