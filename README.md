@@ -33,3 +33,9 @@ How to Run The Program:
 
 How to Run The Program:
 `python /multi-processing/app.py`
+
+## Distributing Parts of a Matrix over Sockets
+[Discussion/Paper](./assets/pdfs/socket.pdf)
+
+How to Run The Program:
+`python /socket/main.py`
