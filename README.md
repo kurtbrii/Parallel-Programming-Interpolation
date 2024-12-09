@@ -1,7 +1,8 @@
 # Parallel Programming Exercise
 
 ## Table of Contents
-- [Base](#base)
+- [Base](#interpolating-elevations-base)
+- [Multi-Threading](#runtime-efficient-threaded-interpolating-elevation-multi-threading)
 
 ## Interpolating Elevations Base
 - Interpolating the elevations into a higher resolution digital elevation matrix M given a lower resolution digital elevation matrix N
