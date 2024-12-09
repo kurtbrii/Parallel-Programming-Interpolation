@@ -3,6 +3,7 @@
 ## Table of Contents
 - [Base](#interpolating-elevations-base)
 - [Multi-Threading](#runtime-efficient-threaded-interpolating-elevation-multi-threading)
+- [Multi-Processing]()
 
 ## Interpolating Elevations Base
 - Interpolating the elevations into a higher resolution digital elevation matrix M given a lower resolution digital elevation matrix N
@@ -25,3 +26,10 @@ How to Run The Program:
 
 How to Run The Program:
 `python /multi-threaded/app.py`
+
+## Runtime-efficient Threaded Interpolating elevation and Core-affine Threaded Computation of Interpolating Elevation
+![Screenshot](./assets/screenshots/multiprocessing.png)
+[Discussion/Paper](./assets/pdfs/multiprocessing.pdf)
+
+How to Run The Program:
+`python /multi-processing/app.py`
