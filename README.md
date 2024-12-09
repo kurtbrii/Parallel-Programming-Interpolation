@@ -12,4 +12,4 @@ the elevation of grid points that are divisible by 10.
 [Discussion/Paper](./assets/pdfs/base.pdf)
 
 How to Run The Program:
-`python app.py`
+`python3 app.py`
